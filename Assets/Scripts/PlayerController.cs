@@ -49,10 +49,16 @@ public class PlayerController : MonoBehaviour
         }
 
         //circle Movement
-        if (Math.Abs(Input.touches[0].deltaPosition.x) > 1.5f && Input.touches[0].deltaPosition.x > 0)
-            currentMovementSpeed = Input.touches[0].deltaPosition.magnitude;
-        if (Math.Abs(Input.touches[0].deltaPosition.x) > 1.5f && Input.touches[0].deltaPosition.x < 0)
-            currentMovementSpeed = -Input.touches[0].deltaPosition.magnitude;
+
+        if (Input.GetTouch(0).position.x < 150f ||
+            Math.Abs(Input.GetTouch(0).position.x - Screen.width) < 150f)
+        {  
+            if (Math.Abs(Input.GetTouch(0).deltaPosition.x) > 2.5f)
+                currentMovementSpeed = Input.GetTouch(0).deltaPosition.x;
+        }
+        else
+            currentMovementSpeed = Input.GetTouch(0).deltaPosition.x;
+        
         circlePosition += 0.05f * currentMovementSpeed * Time.deltaTime * speed;
         float x = Mathf.Cos(circlePosition) * range;
         float y = Mathf.Sin(circlePosition) * range;
